@@ -10,7 +10,7 @@ Source0: http://downloads.sourceforge.net/dump/dump-0.4b46.tar.gz
 Patch0:  dump-buildfix.patch
 Patch1:  dump-remove-lzo.patch
 
-BuildRequires: e2fsprogs-devel readline-devel automake libtool gdb
+BuildRequires: make e2fsprogs-devel readline-devel automake libtool gdb
 BuildRequires: bzip2-devel libselinux-devel zlib-devel lzo-devel
 
 Requires: setup rmt
