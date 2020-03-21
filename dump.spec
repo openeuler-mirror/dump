@@ -1,7 +1,7 @@
 Name:    dump
 Epoch:   1
 Version: 0.4
-Release: 1
+Release: 2
 Summary: Programs for backing up and restoring ext2/3/4 filesystems
 License: BSD
 URL:     http://dump.sourceforge.net/
@@ -10,7 +10,7 @@ Source0: http://downloads.sourceforge.net/dump/dump-0.4b46.tar.gz
 Patch0:  dump-buildfix.patch
 Patch1:  dump-remove-lzo.patch
 
-BuildRequires: e2fsprogs-devel readline-devel automake libtool
+BuildRequires: e2fsprogs-devel readline-devel automake libtool gdb
 BuildRequires: bzip2-devel libselinux-devel zlib-devel lzo-devel
 
 Requires: setup rmt
@@ -70,5 +70,8 @@ popd
 %{_mandir}/*/*
 
 %changelog
+* Sat Mar 21 2020 openEuler Buildteam <buildteam@openeuler.org> - 1:0.4-2
+- Add build requires of gdb
+
 * Fri Oct 11 2019 openEuler Buildteam <buildteam@openeuler.org> - 1:0.4-1
 - Package init
