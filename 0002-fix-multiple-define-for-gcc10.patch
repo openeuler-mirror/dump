@@ -1,0 +1,120 @@
+From dac8b4b851ed8ed83ee5d44e8a42d16f7fe81f8a Mon Sep 17 00:00:00 2001
+From: wguanghao <wuguanghao3@huawei.com>
+Date: Fri, 30 Jul 2021 16:45:57 +0800
+Subject: [PATCH] fix multiple define for gcc10
+
+---
+ common/legacy_indexer.c                | 6 ++----
+ compat/include/protocols/dumprestore.h | 4 ++--
+ dump/itime.c                           | 5 -----
+ dump/main.c                            | 1 +
+ restore/main.c                         | 1 +
+ restore/restore.c                      | 1 +
+ restore/restore.h                      | 2 +-
+ 7 files changed, 8 insertions(+), 12 deletions(-)
+
+diff --git a/common/legacy_indexer.c b/common/legacy_indexer.c
+index c60830c..396232f 100644
+--- a/common/legacy_indexer.c
++++ b/common/legacy_indexer.c
+@@ -49,11 +49,9 @@ static int GetTapePos (long long *);
+ static int MkTapeString (struct s_spcl *, long long);
+ #define FILESQFAPOS	20
+ 
+-int tapepos;
+-int ntrec;		/* blocking factor on tape */
+ int magtapeout;  /* is output a magnetic tape? */
+-//extern int tapepos;
+-//extern int ntrec;		/* blocking factor on tape */
++extern int tapepos;
++extern int ntrec;		/* blocking factor on tape */
+ //extern int magtapeout;  /* is output a magnetic tape? */
+ 
+ static int gtperr = 0;
+diff --git a/compat/include/protocols/dumprestore.h b/compat/include/protocols/dumprestore.h
+index 7fcdab5..01d7750 100644
+--- a/compat/include/protocols/dumprestore.h
++++ b/compat/include/protocols/dumprestore.h
+@@ -78,12 +78,12 @@ typedef u_int32_t	dump_ino_t;
+ typedef unsigned int	dump_ino_t;
+ #endif
+ 
+-union u_data {
++extern union u_data {
+ 	char	s_addrs[TP_NINDIR];	/* 1 => data; 0 => hole in inode */
+ 	int32_t	s_inos[TP_NINOS];	/* table of first inode on each volume */
+ } u_data;
+ 
+-union u_spcl {
++extern union u_spcl {
+ 	char dummy[TP_BSIZE];
+ 	struct	s_spcl {
+ 		int32_t	c_type;		    /* record type (see below) */
+diff --git a/dump/itime.c b/dump/itime.c
+index 678f96e..e3cd331 100644
+--- a/dump/itime.c
++++ b/dump/itime.c
+@@ -71,11 +71,6 @@
+ 
+ #include "dump.h"
+ 
+-struct	dumpdates **ddatev;
+-int	nddates;
+-int	ddates_in;
+-struct	dumptime *dthead;
+-
+ static	void dumprecout (FILE *, struct dumpdates *);
+ static	int getrecord (FILE *, struct dumpdates *);
+ static	int makedumpdate (struct dumpdates *, char *);
+diff --git a/dump/main.c b/dump/main.c
+index 142aa2b..3356107 100644
+--- a/dump/main.c
++++ b/dump/main.c
+@@ -171,6 +171,7 @@ long	uncomprblks = 0;/* uncompressed blocks written */
+ Transformation *transformation = &transformation_null;
+ 
+ long smtc_errno;
++union u_spcl u_spcl;
+ 
+ #ifdef	__linux__
+ char	*__progname;
+diff --git a/restore/main.c b/restore/main.c
+index 4ce7293..4539745 100644
+--- a/restore/main.c
++++ b/restore/main.c
+@@ -108,6 +108,7 @@ char	*bot_script = NULL;
+ dump_ino_t volinfo[TP_NINOS];
+ int	wdfd;
+ int	dirhash_size = 1;
++union 	u_spcl u_spcl;
+ 
+ #ifdef USE_QFA
+ FILE	*gTapeposfp;
+diff --git a/restore/restore.c b/restore/restore.c
+index a775e37..5ea7c79 100644
+--- a/restore/restore.c
++++ b/restore/restore.c
+@@ -71,6 +71,7 @@
+ #include "restore.h"
+ #include "extern.h"
+ 
++struct context curfile;
+ static char *keyval (int);
+ 
+ /*
+diff --git a/restore/restore.h b/restore/restore.h
+index 68ec54e..915546f 100644
+--- a/restore/restore.h
++++ b/restore/restore.h
+@@ -130,7 +130,7 @@ struct entry {
+ /*
+  * The entry describes the next file available on the tape
+  */
+-struct context {
++extern struct context {
+ 	char	*name;		/* name of file */
+ 	dump_ino_t ino;		/* inumber of file */
+ #if defined(__linux__) || defined(sunos)
+-- 
+1.8.3.1
+

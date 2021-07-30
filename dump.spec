@@ -1,7 +1,7 @@
 Name:    dump
 Epoch:   1
 Version: 0.4
-Release: 2
+Release: 3
 Summary: Programs for backing up and restoring ext2/3/4 filesystems
 License: BSD
 URL:     http://dump.sourceforge.net/
@@ -9,6 +9,7 @@ Source0: http://downloads.sourceforge.net/dump/dump-0.4b46.tar.gz
 
 Patch0:  dump-buildfix.patch
 Patch1:  dump-remove-lzo.patch
+Patch2:  0002-fix-multiple-define-for-gcc10.patch
 
 BuildRequires: make e2fsprogs-devel readline-devel automake libtool gdb
 BuildRequires: bzip2-devel libselinux-devel zlib-devel lzo-devel
@@ -70,6 +71,9 @@ popd
 %{_mandir}/*/*
 
 %changelog
+* Fri Jul 30 2021 yanglongkang <yanglongkang@huawei.com> - 1:0.4-3
+- fix multiple define for gcc10
+
 * Sat Mar 21 2020 openEuler Buildteam <buildteam@openeuler.org> - 1:0.4-2
 - Add build requires of gdb
 
