@@ -1,7 +1,7 @@
 Name:    dump
 Epoch:   1
 Version: 0.4
-Release: 3
+Release: 4
 Summary: Programs for backing up and restoring ext2/3/4 filesystems
 License: BSD
 URL:     http://dump.sourceforge.net/
@@ -11,7 +11,7 @@ Patch0:  dump-buildfix.patch
 Patch1:  dump-remove-lzo.patch
 Patch2:  0002-fix-multiple-define-for-gcc10.patch
 
-BuildRequires: make e2fsprogs-devel readline-devel automake libtool gdb
+BuildRequires: make e2fsprogs-devel readline-devel automake libtool
 BuildRequires: bzip2-devel libselinux-devel zlib-devel lzo-devel
 
 Requires: setup rmt
@@ -71,6 +71,9 @@ popd
 %{_mandir}/*/*
 
 %changelog
+* Wed Aug 04 2021 chenyanpanHW <chenyanpan@huawei.com> - 0.4-4
+- DESC: delete BuildRequires gdb
+
 * Fri Jul 30 2021 yanglongkang <yanglongkang@huawei.com> - 1:0.4-3
 - fix multiple define for gcc10
 
