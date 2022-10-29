@@ -1,11 +1,11 @@
 Name:    dump
 Epoch:   1
 Version: 0.4
-Release: 5
+Release: 6
 Summary: Programs for backing up and restoring ext2/3/4 filesystems
 License: BSD
 URL:     http://dump.sourceforge.net/
-Source0: http://downloads.sourceforge.net/dump/dump-0.4b47.tar.gz
+Source0: http://downloads.sourceforge.net/dump/dump-%{version}b47.tar.gz
 
 Patch1:  0001-fix-multiple-define-for-gcc10.patch
 
@@ -69,6 +69,9 @@ popd
 %{_mandir}/*/*
 
 %changelog
+* Sat Oct 29 2022 wangzhiqiang <wangzhiqiang95@huawei.com> - 1:0.4-6
+- modify source0 url
+
 * Wed Nov 17 2021 Wenchao Hao <haowenchao@huawei.com> - 0.4-5
 - Update to dump-0.4b47
 
