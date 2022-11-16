@@ -1,7 +1,7 @@
 Name:    dump
 Epoch:   1
 Version: 0.4
-Release: 6
+Release: 7
 Summary: Programs for backing up and restoring ext2/3/4 filesystems
 License: BSD
 URL:     http://dump.sourceforge.net/
@@ -69,6 +69,9 @@ popd
 %{_mandir}/*/*
 
 %changelog
+* Wed Nov 16 2022 wangzhiqiang <wangzhiqiang95@huawei.com> - 1:0.4-7
+- the tar package is consistent with that in the upstream community
+
 * Sat Oct 29 2022 wangzhiqiang <wangzhiqiang95@huawei.com> - 1:0.4-6
 - modify source0 url
 
