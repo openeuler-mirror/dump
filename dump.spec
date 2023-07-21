@@ -1,7 +1,7 @@
 Name:    dump
 Epoch:   1
 Version: 0.4
-Release: 6
+Release: 7
 Summary: Programs for backing up and restoring ext2/3/4 filesystems
 License: BSD
 URL:     http://dump.sourceforge.net/
@@ -10,7 +10,7 @@ Source0: http://downloads.sourceforge.net/dump/dump-%{version}b47.tar.gz
 Patch1:  0001-fix-multiple-define-for-gcc10.patch
 
 BuildRequires: make e2fsprogs-devel readline-devel automake libtool
-BuildRequires: bzip2-devel libselinux-devel zlib-devel lzo-devel
+BuildRequires: bzip2-devel libselinux-devel zlib-devel lzo-devel lld
 
 Requires: setup rmt
 
@@ -32,6 +32,9 @@ Single files and directory subtrees may also be restored from full or partial ba
 %build
 autoreconf -fiv
 
+%if "%toolchain" == "clang"
+	export LDFLAGS="$LDFLAGS -fuse-ld=lld"
+%endif
 export CFLAGS="$RPM_OPT_FLAGS -Wall -Wpointer-arith -Wstrict-prototypes \
 -Wmissing-prototypes -Wno-char-subscripts -fno-strict-aliasing"
 
@@ -69,6 +72,9 @@ popd
 %{_mandir}/*/*
 
 %changelog
+* Wed Jul 19 2023 yoo <sunyuechi@iscas.ac.cn> - 0.4-7
+- fix clang build error
+
 * Sat Oct 29 2022 wangzhiqiang <wangzhiqiang95@huawei.com> - 1:0.4-6
 - modify source0 url
 
